@@ -13,22 +13,24 @@ Welcome to my personal portfolio! This project showcases my work, experiences, a
 
 ## 🗂 Project Structure
 
+```text
 my-portfolio/
-├── app/ # App directory (Next.js 15)
-│ ├── components/ # Reusable UI sections
-│ ├── ui/ # UI elements like buttons, toggles
-│ ├── hooks/ # Custom React hooks
-│ ├── config/ # API configuration
-│ ├── (main)/ # Page routes (about, projects, etc)
-│ ├── api/ # API route handlers
-│ ├── layout.js # Main layout
-│ └── ThemeWrapper.js # Theme context provider
-├── data/ # JSON content
-├── public/ # Public assets (images, files)
-├── styles/ # Global styles
-├── .env.local # Environment config (ignored)
+├── app/                   # App directory (Next.js 15)
+│   ├── components/        # Reusable UI sections
+│   ├── ui/                # UI elements like buttons, toggles
+│   ├── hooks/             # Custom React hooks
+│   ├── config/            # API configuration
+│   ├── (main)/            # Page routes (about, projects, etc)
+│   ├── api/               # API route handlers
+│   ├── layout.js          # Main layout
+│   └── ThemeWrapper.js    # Theme context provider
+├── data/                  # JSON content
+├── public/                # Public assets (images, files)
+├── styles/                # Global styles
+├── .env.local             # Environment config (ignored)
 ├── next.config.js
 └── package.json
+
 
 
 
