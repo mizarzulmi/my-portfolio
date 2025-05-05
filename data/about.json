@@ -1,0 +1,19 @@
+{
+    "shortBio": "I'm a passionate web developer with 5+ years of experience...",
+    "profileImage": "/images/profile-1.png",
+    "bio": [
+        "Hello! I'm Mizar Zulmi Ramadhan...",
+        "Saya memiliki pengalaman dalam pengembangan web modern...",
+        "Selain coding, saya senang berbagi pengetahuan melalui tulisan..."
+    ],
+    "skills": [
+        {
+            "name": "JavaScript",
+            "icon": "javascript.svg"
+        },
+        {
+            "name": "Next.js",
+            "icon": "nextjs.svg"
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+my-portfolio/
+├── app/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── navbar/
+│   │   │   │   ├── MobileMenu.js
+│   │   │   │   ├── Navbar.js
+│   │   │   │   └── NavLink.js
+│   │   │   └── Footer.js
+│   │   └── sections/
+│   │       ├── AboutSections.js
+│   │       ├── ExperiencesSettings.js
+│   │       └── SummarySections.js
+│   │
+│   ├── ui/
+│   │   ├── Button.js
+│   │   ├── CustomHandBuggerIcon.js
+│   │   ├── LanguageSwitches.js
+│   │   ├── LoadingSpinner.js
+│   │   └── ThemeToggle.js
+│   │
+│   ├── config/
+│   │   └── api.js                   
+│   │
+│   ├── hooks/
+│   │   └── useTheme.js  
+│   │
+│   ├── (main)/
+│   │   ├── about/
+│   │   │   └── page.js
+│   │   ├── articles/
+│   │   ├── contact/
+│   │   ├── experience/
+│   │   ├── projects/
+│   │   └── page.js
+│   │
+│   ├── api(data/
+│   │   ├── [type]/
+│   │   │   ├── about/
+│   │   │   ├── experience/
+│   │   │   ├── summary/
+│   │   │   └── routes
+│   │
+│   ├── favicon.ico
+│   ├── globalss.css
+│   ├── layout.js
+│   └── ThemeWrapper.js
+│
+├── data/
+│   ├── about.json
+│   ├── experience.json
+│   └── summary.json
+│
+├── public/
+│   ├── assets/
+│   ├── file/
+│   └── images/
+│
+├── .env.local                       
+├── next.config.js
+└── package.json

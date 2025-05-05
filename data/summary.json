@@ -1,0 +1,13 @@
+{
+    "name": "Mizar Zulmi Ramadhan",
+    "greeting": "Hi, Saya",
+    "description": "Fullstack Web Developer berlatar belakang IT. Berpengalaman membangun dan mengelola sistem web, antusias pada teknologi, pemrograman, dan problem-solving. Terbuka untuk kolaborasi dalam pengembangan solusi web dan cloud.",
+    "profileImage": "/images/profile-1.png",
+    "links": [
+        {
+            "text": "CV",
+            "url": "/file/CV-MizarZulmiRamadhan.pdf",
+            "external": false
+        }
+    ]
+}

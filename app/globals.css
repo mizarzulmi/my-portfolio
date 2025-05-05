@@ -1,26 +1,177 @@
 @import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* Light Theme */
+    --background: 255 255 255;
+    --foreground: 0 0 0;
+    --navbar-bg: 255 255 255;
+    --footer-bg: 255 255 255;
+    --card-bg: 249 250 251;
+    --card-foreground: 0 0 0;
+    --border-color: 229 231 235;
+    --muted-foreground: 75 85 99;
+
+    /* Button Colors Light */
+    --primary: 30 64 175;
+    /* blue-800 */
+    --primary-foreground: 255 255 255;
+    --ring: 59 130 246;
+    --input: 229 231 235;
+    --accent: 243 244 246;
+    --accent-foreground: 17 24 39;
+
+    --adaptive-button-bg: 229 231 235;
+    /* gray-200 */
+    --adaptive-button-text: 17 24 39;
+    /* slate-900 */
+    --adaptive-button-hover: 209 213 219;
+    /* gray-300 */
+    --adaptive-button-hover-text: 17 24 39;
+    /* slate-900 */
+
+    --text-primary: 17 24 39;
+    /* gray-900 */
+    --text-secondary: 75 85 99;
+    /* gray-600 */
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+    /* Dark Theme */
+    --background: 10 10 10;
+    --foreground: 245 245 245;
+    --navbar-bg: 10 10 10;
+    --footer-bg: 10 10 10;
+    --card-bg: 23 23 23;
+    --card-foreground: 245 245 245;
+    --border-color: 38 38 38;
+    --muted-foreground: 160 160 160;
+
+    /* Button Colors Dark */
+    --primary: 30 64 175;
+    /* konsisten dengan light theme */
+    --primary-foreground: 255 255 255;
+    --ring: 59 130 246;
+    --input: 38 38 38;
+    --accent: 38 38 38;
+    --accent-foreground: 245 245 245;
+
+    --adaptive-button-bg: var(--primary);
+    /* dark = primary */
+    --adaptive-button-text: var(--primary-foreground);
+    --adaptive-button-hover: 30 58 138;
+    /* dark hover (blue-900) */
+    --adaptive-button-hover-text: 255 255 255;
+
+    --text-primary: 255 255 255;
+    --text-secondary: 209 213 219;
+    /* gray-300 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base Styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Class utilitas tambahan */
+.bg-card {
+    background-color: rgb(var(--card-bg));
+}
+
+.text-card {
+    color: rgb(var(--card-foreground));
+}
+
+/* Navbar dan Footer khusus */
+.navbar-bg {
+    background-color: rgb(var(--navbar-bg));
+}
+
+.footer-bg {
+    background-color: rgb(var(--footer-bg));
+}
+
+.border-custom {
+    border-color: rgb(var(--border-color));
+}
+
+.custom-w {
+    max-width: 800px;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+    color: rgb(var(--foreground));
+}
+
+p {
+    color: rgb(var(--foreground));
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: rgb(59 130 246);
+    /* blue-500 */
+}
+
+/* Form Elements */
+input,
+select,
+textarea {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    border-color: rgb(var(--border-color));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--muted-foreground));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--foreground));
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.mobile-menu-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 200ms, transform 200ms;
+}
+
+.mobile-menu-exit {
+    opacity: 1;
+}
+
+.mobile-menu-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 200ms, transform 200ms;
 }
