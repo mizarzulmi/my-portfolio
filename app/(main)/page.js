@@ -1,15 +1,16 @@
-// app/page.js
 "use client";
 
 import { useEffect, useState } from "react";
 import ExperienceSection from "@/app/_components/sections/ExperienceSection";
 import SummarySection from "@/app/_components/sections/SummarySection";
+import ProjectSection from "@/app/_components/sections/ProjectSection";
 import { apiClient } from "@/app/_utils/api-client";
 import LoadingSpinner from "@/app/_components/ui/LoadingSpinner";
 
 export default function Home() {
   const [summaryData, setSummaryData] = useState(null);
   const [experienceData, setExperienceData] = useState(null);
+  const [projectsData, setProjectsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,12 +18,17 @@ export default function Home() {
     const fetchData = async () => {
       try {
         // Fetch data secara parallel
-        const [summaryRes, experienceRes] = await Promise.all([
+        const [summaryRes, experienceRes, projectsRes] = await Promise.all([
           apiClient("/api/data/summary"),
           apiClient("/api/data/experience"),
+          apiClient("/api/data/project?limit=2"),
         ]);
 
-        console.log("API Responses:", { summaryRes, experienceRes });
+        console.log("API Responses:", {
+          summaryRes,
+          experienceRes,
+          projectsRes,
+        });
 
         // Handle summary data
         const receivedSummary = summaryRes.data || summaryRes;
@@ -37,6 +43,16 @@ export default function Home() {
           throw new Error("Experience data should be an array");
         }
         setExperienceData(receivedExperience);
+
+        // Handle projects data
+        const receivedProjects = projectsRes.data || projectsRes;
+        if (
+          !receivedProjects?.description ||
+          !Array.isArray(receivedProjects.projects)
+        ) {
+          throw new Error("Invalid projects data structure");
+        }
+        setProjectsData(receivedProjects);
       } catch (err) {
         console.error("Fetch error:", err);
         setError(err.message);
@@ -61,13 +77,21 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-10">
       <SummarySection data={summaryData} loading={loading} error={error} />
       <ExperienceSection
         data={experienceData}
         loading={loading}
         error={error}
       />
+      {projectsData && (
+        <ProjectSection
+          projectsData={projectsData}
+          loading={loading}
+          error={error}
+          showViewAll={true} // Add this prop to show "View all" link
+        />
+      )}
     </div>
   );
 }

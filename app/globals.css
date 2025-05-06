@@ -32,6 +32,7 @@
     /* gray-900 */
     --text-secondary: 75 85 99;
     /* gray-600 */
+    
 
 }
 
@@ -65,6 +66,20 @@
     --text-primary: 255 255 255;
     --text-secondary: 209 213 219;
     /* gray-300 */
+}
+
+.btn-soft {
+  background-color: rgb(var(--card-bg));
+  color: rgb(var(--card-foreground));
+  border: 1px solid rgb(var(--border-color));
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-soft:hover {
+  background-color: rgb(var(--accent));
 }
 
 /* Base Styles */
@@ -174,4 +189,19 @@ textarea {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 200ms, transform 200ms;
+}
+
+#nprogress {
+  pointer-events: none;
+  position: relative;
+  z-index: 9999;
+}
+
+#nprogress .bar {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  height: 3px;
+}
+
+#nprogress .peg {
+  display: none;
 }

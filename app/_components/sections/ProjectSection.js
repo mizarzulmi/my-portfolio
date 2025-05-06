@@ -1,0 +1,168 @@
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
+export default function ProjectSection({ projectsData, showViewAll = false }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  if (!projectsData || !projectsData.projects) {
+    return (
+      <div className="text-center text-red-500 py-8">
+        Projects data is not available
+      </div>
+    );
+  }
+
+  if (projectsData.projects.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        No projects to display
+      </div>
+    );
+  }
+
+  return (
+    <section className="pb-5">
+      <div className="my-6 flex flex-col gap-0">
+        <div className="flex group my-6 cursor-pointer items-center justify-between gap-3">
+          <Link href="/projects">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="tracking-wider text-2xl font-bold underline-offset-4 group-hover:underline text-gray-800 dark:text-white"
+            >
+              Projects
+            </motion.h2>
+          </Link>
+          {showViewAll && (
+            <Link href="/projects">
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="btn-soft"
+              >
+                View all →
+              </motion.span>
+            </Link>
+          )}
+        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-2 text-wrap text-sm text-gray-600 dark:text-muted-foreground"
+        >
+          {projectsData.description}
+        </motion.p>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-6 grid gap-4"
+      >
+        {projectsData.projects.map((project, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ y: -2 }}
+            className="flex flex-col gap-3 rounded-lg border bg-card text-card border-custom p-4 sm:flex-row group relative transition-all duration-200 hover:shadow-sm backdrop-blur-sm hover:bg-gray-100/50 dark:hover:bg-neutral-800/50"
+          >
+            {/* Image container */}
+            <div
+              className="relative cursor-zoom-in overflow-hidden rounded-md"
+              onClick={() => setSelectedImage(project.image)}
+            >
+              <div className="relative h-60 min-w-40 sm:h-24">
+                <Image
+                  alt={project.title}
+                  src={project.image}
+                  fill
+                  className="object-cover rounded-md transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                {/* Simple overlay effect */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <Link href={`/projects/${project.slug}`}>
+                <h3 className="mb-2 text-lg font-medium transition-colors duration-200 hover:underline text-gray-800 dark:text-white">
+                  {project.title}
+                </h3>
+                <p className="text-gray-600 dark:text-muted-foreground text-sm line-clamp-2">
+                  {project.description}
+                </p>
+                <p className="mt-2 flex items-center gap-4 text-sm font-semibold text-gray-500 dark:text-muted-foreground">
+                  {project.date}
+                  <span className="flex items-center gap-1">
+                    ⭐️ {project.stars} stars
+                  </span>
+                </p>
+              </Link>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Image Zoom Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              transition={{ type: "spring", damping: 20 }}
+              className="relative max-w-6xl w-full max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors duration-200"
+                onClick={() => setSelectedImage(null)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <div className="relative w-full h-full">
+                <Image
+                  src={selectedImage}
+                  alt="Zoomed project preview"
+                  width={1920}
+                  height={1080}
+                  className="object-contain"
+                  quality={100}
+                  priority
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
