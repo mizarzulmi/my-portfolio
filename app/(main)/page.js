@@ -4,55 +4,50 @@ import { useEffect, useState } from "react";
 import ExperienceSection from "@/app/_components/sections/ExperienceSection";
 import SummarySection from "@/app/_components/sections/SummarySection";
 import ProjectSection from "@/app/_components/sections/ProjectSection";
+import BlogSection from "@/app/_components/sections/BlogSection";
 import { apiClient } from "@/app/_utils/api-client";
+import { sanityClient } from "@/app/_utils/sanity.client";
 import LoadingSpinner from "@/app/_components/ui/LoadingSpinner";
 
 export default function Home() {
   const [summaryData, setSummaryData] = useState(null);
   const [experienceData, setExperienceData] = useState(null);
   const [projectsData, setProjectsData] = useState(null);
+  const [blogPosts, setBlogPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data secara parallel
+        // Fetch data dari API lokal (summary, experience, projects)
         const [summaryRes, experienceRes, projectsRes] = await Promise.all([
           apiClient("/api/data/summary"),
           apiClient("/api/data/experience"),
           apiClient("/api/data/project?limit=2"),
         ]);
 
-        console.log("API Responses:", {
-          summaryRes,
-          experienceRes,
-          projectsRes,
-        });
+        // Fetch data blog langsung dari Sanity
+        const blogQuery = `*[_type == "post"] | order(publishedAt desc) [0...2] {
+          _id,
+          title,
+          slug,
+          excerpt,
+          publishedAt,
+          views,
+          "categories": categories[]->{
+            _id,
+            title,
+            slug
+          }
+        }`;
+        const sanityPosts = await sanityClient.fetch(blogQuery);
 
-        // Handle summary data
-        const receivedSummary = summaryRes.data || summaryRes;
-        if (!receivedSummary?.name) {
-          throw new Error("Invalid summary data structure");
-        }
-        setSummaryData(receivedSummary);
-
-        // Handle experience data
-        const receivedExperience = experienceRes.data || experienceRes;
-        if (!Array.isArray(receivedExperience)) {
-          throw new Error("Experience data should be an array");
-        }
-        setExperienceData(receivedExperience);
-
-        // Handle projects data
-        const receivedProjects = projectsRes.data || projectsRes;
-        if (
-          !receivedProjects?.description ||
-          !Array.isArray(receivedProjects.projects)
-        ) {
-          throw new Error("Invalid projects data structure");
-        }
-        setProjectsData(receivedProjects);
+        // Handle semua response
+        setSummaryData(summaryRes.data || summaryRes);
+        setExperienceData(experienceRes.data || experienceRes);
+        setProjectsData(projectsRes.data || projectsRes);
+        setBlogPosts(sanityPosts);
       } catch (err) {
         console.error("Fetch error:", err);
         setError(err.message);
@@ -89,7 +84,15 @@ export default function Home() {
           projectsData={projectsData}
           loading={loading}
           error={error}
-          showViewAll={true} // Add this prop to show "View all" link
+          showViewAll={true}
+        />
+      )}
+      {blogPosts && (
+        <BlogSection
+          posts={blogPosts}
+          loading={loading}
+          error={error}
+          showViewAll={true}
         />
       )}
     </div>

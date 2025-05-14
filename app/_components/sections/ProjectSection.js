@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { getTechIcon } from "@/app/_utils/techIcons";
 
 export default function ProjectSection({ projectsData, showViewAll = false }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -78,7 +79,7 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
               className="relative cursor-zoom-in overflow-hidden rounded-md"
               onClick={() => setSelectedImage(project.image)}
             >
-              <div className="relative h-60 min-w-40 sm:h-24">
+              <div className="relative h-60 min-w-40 sm:h-30">
                 <Image
                   alt={project.title}
                   src={project.image}
@@ -97,21 +98,43 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
                   {project.title}
                 </h3>
                 <p className="text-gray-600 dark:text-muted-foreground text-sm line-clamp-2">
-                  {project.description}
+                  {/* {project.description} */}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: project.description }}
+                  />
                 </p>
-                <p className="mt-2 flex items-center gap-4 text-sm font-semibold text-gray-500 dark:text-muted-foreground">
-                  {project.date}
-                  <span className="flex items-center gap-1">
-                    ⭐️ {project.stars} stars
-                  </span>
-                </p>
+
+                {/* Tech Stack Badges */}
+                {project.tech_stack && (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {project.tech_stack.split(", ").map((tech, techIndex) => {
+                      const iconUrl = getTechIcon(tech.trim());
+                      return (
+                        <div
+                          key={techIndex}
+                          className="inline-flex items-center gap-1 rounded border border-gray-200 dark:border-gray-700 px-2 py-1 text-xs"
+                        >
+                          <img
+                            alt={tech}
+                            loading="lazy"
+                            width="12"
+                            height="12"
+                            className="h-3 w-3"
+                            src={iconUrl}
+                          />
+                          <span>{tech}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </Link>
             </div>
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Image Zoom Modal */}
+      {/* Image Zoom Modal (keep the existing modal code) */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div

@@ -1,5 +1,5 @@
 // app/api/data/projects/route.js
-import projectsData from "@/data/project.json";
+import projectsData from "@/data/projects.json";
 import ApiResponse from "@/app/_utils/api-response";
 
 export async function GET(request) {

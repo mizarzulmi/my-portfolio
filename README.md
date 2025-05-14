@@ -16,7 +16,7 @@ Welcome to my personal portfolio! This project showcases my work, experiences, a
 ```text
 my-portfolio/
 ├── app/                   # App directory (Next.js 15)
-│   ├── components/        # Reusable UI sections
+│   ├── _components/        # Reusable UI sections
 │   │   ├── layout/
 │   │   │   ├── navbar/
 │   │   │   │   ├── MobileMenu.js
@@ -56,6 +56,7 @@ my-portfolio/
 │   ├── assets/
 │   ├── file/
 │   └── images/
+├── sanity/                # sanity
 ├── .env.local             # Environment config (ignored)
 ├── next.config.js
 └── package.json

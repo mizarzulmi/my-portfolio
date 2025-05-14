@@ -6,21 +6,32 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio": "cd sanity && sanity dev",
+    "dev:all": "concurrently \"npm run dev\" \"npm run studio\""
   },
   "dependencies": {
+    "@sanity/client": "^6.29.1",
+    "@sanity/icons": "^3.7.0",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.88.2",
+    "autoprefixer": "^10.4.21",
     "framer-motion": "^12.9.4",
     "libretranslate": "^1.0.1",
     "next": "15.3.1",
+    "next-sanity": "^9.11.0",
     "nprogress": "^0.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sanity": "^3.88.2",
+    "styled-components": "^6.1.18"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "concurrently": "^9.1.2",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4.1.6"
   }
 }
