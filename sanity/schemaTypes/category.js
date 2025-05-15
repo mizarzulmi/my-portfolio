@@ -1,7 +1,7 @@
 import { Folder } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-export const categoryType = defineType({
+export const category = defineType({
   name: "category",
   title: "Category",
   type: "document",

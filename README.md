@@ -39,7 +39,7 @@ my-portfolio/
 │   │   └── api.js
 │   ├── (main)/            # Page routes (about, projects, etc)
 │   │   ├── about/
-│   │   ├── articles/
+│   │   ├── blog/
 │   │   ├── contact/
 │   │   ├── experience/
 │   │   ├── projects/

@@ -13,7 +13,7 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient("/api/data/about");
+        const response = await apiClient("/api/about");
         setAboutData({
           shortBio: response.data.shortBio ?? "",
           profileImage: response.data.profileImage ?? "",

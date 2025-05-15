@@ -1,17 +1,23 @@
-import { blockContentType } from "./blockContentType";
-import { categoryType } from "./categoryType";
-import { postType } from "./postType";
-import { authorType } from "./authorType";
-import { tagType } from "./tagType";
-import { projectType } from "./projectType";
+import { blockContent } from "./blockContent";
+import { category } from "./category";
+import { post } from "./post";
+import { author } from "./author";
+import { tag } from "./tag";
+import { project } from "./project";
+import { summary } from "./summary";
+import { about } from "./about";
+import { experience } from "./experience";
 
 export const schema = {
   types: [
-    blockContentType,
-    categoryType,
-    postType,
-    authorType,
-    tagType,
-    projectType,
+    blockContent,
+    category,
+    post,
+    author,
+    tag,
+    project,
+    summary,
+    about,
+    experience,
   ],
 };

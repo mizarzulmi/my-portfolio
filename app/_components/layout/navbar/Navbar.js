@@ -13,9 +13,10 @@ export default function Navbar() {
   const closeMobileMenu = () => setIsOpen(false);
 
   const navLinks = [
+    { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/projects", label: "Projects" },
-    { href: "/articles", label: "Articles" },
+    { href: "/blog", label: "Blog" },
   ];
 
   return (
@@ -27,9 +28,7 @@ export default function Navbar() {
             href="/"
             className="text-lg font-medium hover:text-blue-600 dark:hover:text-blue-400"
             onClick={closeMobileMenu}
-          >
-            Home
-          </Link>
+          ></Link>
 
           {/* Container untuk Menu Kanan */}
           <div className="flex items-center gap-6">

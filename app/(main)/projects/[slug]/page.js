@@ -14,7 +14,7 @@ export default function ProjectDetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient(`/api/data/projects`);
+        const response = await apiClient(`/api/projects`);
         const foundProject = response.data.projects.find(
           (p) => p.slug === slug
         );

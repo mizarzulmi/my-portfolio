@@ -13,7 +13,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient("/api/data/project");
+        const response = await apiClient("/api/project");
 
         // Add year to each project if not already present
         const projectsWithYear = response.data.projects.map((project) => {

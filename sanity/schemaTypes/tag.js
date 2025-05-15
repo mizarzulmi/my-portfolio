@@ -1,7 +1,7 @@
 import { TagIcon, CodeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
-export const tagType = defineType({
+export const tag = defineType({
   name: "tag",
   title: "Tech Tag", // Ubah title untuk lebih spesifik
   type: "document",

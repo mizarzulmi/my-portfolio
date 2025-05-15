@@ -5,7 +5,8 @@ export const config = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2024-05-01", // sesuaikan tanggal API terbaru
-  useCdn: true,
+  useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
 };
 
 export const sanityClient = createClient(config);
