@@ -5,8 +5,10 @@ export const structure = (S) =>
     .items([
       S.documentTypeListItem("summary").title("Summary"),
       S.documentTypeListItem("about").title("About"),
+      S.documentTypeListItem("education").title("Education"),
       S.documentTypeListItem("experience").title("Experience"),
       S.documentTypeListItem("project").title("Projects"),
+      S.documentTypeListItem("certification").title("Certification"),
       S.documentTypeListItem("post").title("Posts"),
       S.documentTypeListItem("tag").title("Tags"),
       S.documentTypeListItem("category").title("Categories"),
@@ -18,7 +20,9 @@ export const structure = (S) =>
           ![
             "summary",
             "about",
+            "education",
             "experience",
+            "certification",
             "post",
             "project",
             "category",

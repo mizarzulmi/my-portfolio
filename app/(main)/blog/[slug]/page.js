@@ -1,147 +1,142 @@
-import { apiClient } from "@/app/_utils/api-client";
-import Link from "next/link";
+import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/app/_utils/sanity.client";
+import { apiClient } from "@/app/_utils/api-client";
+import ViewTracker from "@/app/_components/ui/ViewTracker";
+import Link from "next/link";
 
-async function getTagData(slug) {
+async function getPost(slug) {
   try {
-    const response = await apiClient(`/api/tags/${slug}`);
-
-    if (!response.success) {
-      throw new Error(response.error || "Failed to load tag data");
-    }
+    const response = await apiClient(`/api/blog/${slug}`);
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching tag data:", error);
+    console.error("Error fetching post:", error);
     throw error;
   }
 }
 
 export async function generateStaticParams() {
   try {
-    const response = await apiClient("/api/tags");
-    return response.data?.map((tag) => ({ slug: tag.slug.current })) || [];
+    const response = await apiClient("/api/blog");
+    return response.data?.map((post) => ({ slug: post.slug.current })) || [];
   } catch (error) {
     console.error("Error generating static params:", error);
     return [];
   }
 }
 
-export default async function TagPage({ params }) {
+export default async function BlogPostPage({ params }) {
   const { slug } = params;
-  let data;
+  let post;
 
   try {
-    data = await getTagData(slug);
+    post = await getPost(slug);
   } catch (error) {
     console.error("Error in page component:", error);
     return (
-      <div className="container mx-auto px-4 py-12 max-w-3xl text-center">
-        <h1 className="text-2xl font-bold mb-4">Tag Not Found</h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
-          {error.message || "The requested tag could not be loaded."}
-        </p>
-        <Link
-          href="/tags"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
-        >
-          Browse all tags
-        </Link>
+      <div className="container mx-auto px-4 py-12 max-w-3xl">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            The requested blog post could not be loaded: {error.message}
+          </p>
+          <Link
+            href="/blog"
+            className="mt-4 inline-block text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            Back to Blog
+          </Link>
+        </div>
       </div>
     );
   }
 
-  const { tag, posts } = data;
-
+  // Render the post content...
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
-          Posts with tag #{tag.title}
-        </h1>
-        {tag.description && (
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            {tag.description}
+      <ViewTracker postId={post._id} />
+
+      <article className="prose prose-lg dark:prose-invert max-w-none">
+        <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
+
+        <div className="flex items-center gap-4 mb-8 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
+          <time dateTime={post.publishedAt} className="flex items-center gap-1">
+            {new Date(post.publishedAt).toLocaleDateString("id-ID", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+
+          {post.views && (
+            <>
+              <span>|</span>
+              <span className="flex items-center gap-1">
+                {post.views} views
+              </span>
+            </>
+          )}
+
+          {post.categories?.length > 0 && (
+            <>
+              <span>|</span>
+              <div className="flex flex-wrap gap-2">
+                {post.categories.map((category) => (
+                  <span
+                    key={category._id}
+                    className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-xs"
+                  >
+                    {category.title}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {post.mainImage && (
+          <div className="mb-8 rounded-lg overflow-hidden">
+            <Image
+              src={urlFor(post.mainImage).url()}
+              alt={post.mainImage.alt || post.title}
+              width={800}
+              height={450}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </div>
+        )}
+
+        {post.excerpt && (
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
+            {post.excerpt}
           </p>
         )}
-        <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-          {posts.length} {posts.length === 1 ? "post" : "posts"} found
+
+        <div className="[&>p]:mb-4 [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:text-2xl [&>h2]:font-bold">
+          <PortableText value={post.body} />
         </div>
-      </header>
 
-      {posts.length === 0 ? (
-        <div className="text-center py-8">
-          <p>No posts found for this tag.</p>
-          <Link
-            href="/blog"
-            className="text-blue-600 dark:text-blue-400 hover:underline mt-4 inline-block"
-          >
-            Browse all posts
-          </Link>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {posts.map((post) => (
-            <article
-              key={post._id}
-              className="border-b border-gray-200 dark:border-gray-700 pb-8"
-            >
-              <Link href={`/blog/${post.slug}`} className="group block">
-                {post.mainImage && (
-                  <div className="mb-4 rounded-lg overflow-hidden">
-                    <Image
-                      src={urlFor(post.mainImage).url()}
-                      alt={post.mainImage.alt || post.title}
-                      width={800}
-                      height={450}
-                      className="w-full h-auto object-cover group-hover:opacity-90 transition-opacity"
-                    />
-                  </div>
-                )}
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {post.title}
-                </h2>
-              </Link>
-
-              <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
-                <time dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString("id-ID", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-                {post.views && (
-                  <span className="flex items-center gap-1">
-                    {post.views} views
-                  </span>
-                )}
-              </div>
-
-              {post.excerpt && (
-                <p className="mt-3 text-gray-600 dark:text-gray-300">
-                  {post.excerpt}
-                </p>
-              )}
-
-              {post.categories?.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {post.categories.map((category) => (
-                    <Link
-                      key={category._id}
-                      href={`/categories/${category.slug}`}
-                      className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      {category.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-      )}
+        {post.tags?.length > 0 && (
+          <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <h4 className="text-sm font-medium mb-2 text-gray-500 dark:text-gray-400">
+              Tags:
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <Link
+                  key={tag._id}
+                  href={`/tags/${tag.slug.current}`}
+                  className="inline-flex items-center rounded border border-gray-200 dark:border-gray-700 px-2 py-1 text-xs hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  #{tag.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </article>
     </div>
   );
 }

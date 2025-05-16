@@ -6,7 +6,9 @@ import { tag } from "./tag";
 import { project } from "./project";
 import { summary } from "./summary";
 import { about } from "./about";
+import { education } from "./education";
 import { experience } from "./experience";
+import { certification } from "./certification";
 
 export const schema = {
   types: [
@@ -18,6 +20,8 @@ export const schema = {
     project,
     summary,
     about,
+    education,
     experience,
+    certification,
   ],
 };
