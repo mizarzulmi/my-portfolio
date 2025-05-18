@@ -12,6 +12,37 @@ export async function GET(request, { params }) {
       title,
       slug,
       description,
+       mainImage {
+          ...,
+          asset-> {
+            _id,
+            url,
+            metadata {
+              dimensions
+            }
+          },
+          "alt": alt
+      },
+      content[] {
+          ...,
+          _type == "image" => {
+            ...,
+            asset-> {
+              _id,
+              url,
+              metadata {
+                dimensions
+              }
+            },
+            "alt": alt
+          },
+          markDefs[] {
+            ...,
+            _type == "internalLink" => {
+              "slug": @.reference->slug
+            }
+          }
+      },
       "image": image.asset->{
         url,
         alt
@@ -24,7 +55,6 @@ export async function GET(request, { params }) {
       },
       project_url,
       github_url,
-      content,
       _createdAt,
       _updatedAt
     }`;

@@ -3,30 +3,58 @@ import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
   try {
-    // First await the params object
     const awaitedParams = await params;
     const { slug } = awaitedParams;
 
     const query = `*[_type == "post" && slug.current == $slug][0] {
-      _id,
-      title,
-      slug,
-      excerpt,
-      mainImage,
-      publishedAt,
-      body,
-      views,
-      "categories": categories[]->{
         _id,
         title,
-        slug
-      },
-      "tags": tags[]->{
-        _id,
-        title,
-        slug
-      }
-    }`;
+        slug,
+        excerpt,
+        mainImage {
+          ...,
+          asset-> {
+            _id,
+            url,
+            metadata {
+              dimensions
+            }
+          },
+          "alt": alt
+        },
+        publishedAt,
+        body[] {
+          ...,
+          _type == "image" => {
+            ...,
+            asset-> {
+              _id,
+              url,
+              metadata {
+                dimensions
+              }
+            },
+            "alt": alt
+          },
+          markDefs[] {
+            ...,
+            _type == "internalLink" => {
+              "slug": @.reference->slug
+            }
+          }
+        },
+        views,
+        "categories": categories[]->{
+          _id,
+          title,
+          slug
+        },
+        "tags": tags[]->{
+          _id,
+          title,
+          slug
+        }
+      }`;
 
     const post = await sanityClient.fetch(query, { slug });
 

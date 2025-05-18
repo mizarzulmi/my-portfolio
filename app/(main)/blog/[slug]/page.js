@@ -117,16 +117,27 @@ export default async function BlogPostPage({ params }) {
           </p>
         )}
 
-        <div className="prose dark:prose-invert max-w-none">
+        {/* <div className="prose dark:prose-invert max-w-none">
           {post.body ? (
             <PortableText
               value={post.body}
               components={PortableTextComponents}
             />
           ) : (
-            <p>No detailed content available for this post.</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              No detailed content available for this post.
+            </p>
           )}
-        </div>
+        </div> */}
+
+        <PortableText
+          value={post.body}
+          components={PortableTextComponents}
+          onMissingComponent={(message, options) => {
+            console.warn(message, options);
+            return <div>Missing component</div>;
+          }}
+        />
 
         {post.tags?.length > 0 && (
           <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
