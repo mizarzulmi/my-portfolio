@@ -78,6 +78,67 @@ my-portfolio/
 └── tailwind.config.js           # Tailwind config
 ```
 
-Catatan :
-backup data : sanity dataset export production ./backup
-import data : sanity dataset import ./backup/ nama_dataset
+## 🛠 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- Docker (optional)
+- Sanity CLI (`npm install -g @sanity/cli`)
+
+### Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## 🐳Docker Setup
+
+```bash
+# Build the Docker image
+docker-compose build
+
+# Start the container
+docker-compose up -d
+
+# Stop the container
+docker-compose down
+```
+
+# 🔧 Environment Configuration
+
+```bash
+# Next.js
+NEXT_PUBLIC_SITE_URL=https://mizarzulmi.dev
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2023-05-03
+
+# Sanity (for studio)
+SANITY_STUDIO_API_PROJECT_ID=your_project_id
+SANITY_STUDIO_API_DATASET=production
+SANITY_STUDIO_PREVIEW_SECRET=your_secret_token
+```
+
+# 🧠 Sanity CMS Commands
+
+```bash
+# Login to Sanity
+sanity login
+
+# Start Sanity Studio locally
+sanity start
+
+# Export production data
+sanity dataset export production ./backup
+
+# Import data to a dataset
+sanity dataset import ./backup/backup.tar.gz nama_dataset
+
+# Deploy Sanity Studio
+sanity deploy
+```
