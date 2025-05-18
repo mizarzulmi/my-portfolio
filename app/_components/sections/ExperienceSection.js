@@ -16,7 +16,7 @@ export default function ExperienceSection({ data, loading, error }) {
     return (
       <section className="mt-16 space-y-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Experience
+          Pengalaman
         </h2>
         <p className="text-red-500 dark:text-red-400">{error}</p>
       </section>
@@ -27,7 +27,7 @@ export default function ExperienceSection({ data, loading, error }) {
     return (
       <section className="mt-16 space-y-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Experience
+          Pengalaman
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
           No experience records available.
@@ -44,10 +44,11 @@ export default function ExperienceSection({ data, loading, error }) {
       transition={{ duration: 0.5 }}
     >
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-        Experience
+        Pengalaman
       </h2>
       <p className="text-wrap text-gray-600 dark:text-gray-400 pb-2">
-        Here are some of the companies Ive had the pleasure of working with.
+        Inilah lembaran pengalaman kerja yang telah membentuk kompetensi
+        profesional saya.
       </p>
 
       <div className="space-y-6">

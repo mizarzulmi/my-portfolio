@@ -54,7 +54,8 @@ export async function GET(request) {
     // Format data sesuai dengan yang diharapkan oleh ProjectsPage
     const responseData = {
       description:
-        sectionData?.description || "Some of the projects I've worked on.",
+        sectionData?.description ||
+        "Beberapa proyek yang pernah saya kerjakan.",
       projects: projects.map((project) => ({
         ...project,
         tech_stack:

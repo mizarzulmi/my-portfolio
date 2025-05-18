@@ -13,9 +13,9 @@ export default function Navbar() {
   const closeMobileMenu = () => setIsOpen(false);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/project", label: "Projects" },
+    { href: "/", label: "Beranda" },
+    { href: "/about", label: "Tentang" },
+    { href: "/project", label: "Proyek" },
     { href: "/blog", label: "Blog" },
   ];
 

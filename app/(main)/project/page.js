@@ -45,7 +45,7 @@ export default function ProjectsPage() {
         }));
 
         setProjectsData({
-          description: `Some of the ${total}+ projects I've worked on. Click on each project to see more details.`,
+          description: `Beberapa dari ${total}+ proyek yang pernah saya kerjakan. Klik setiap proyek untuk melihat detail selengkapnya.`,
           projects: transformedProjects,
         });
       } catch (err) {

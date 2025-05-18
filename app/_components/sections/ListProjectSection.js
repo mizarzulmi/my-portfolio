@@ -33,7 +33,7 @@ export default function ListProjectSection({ projectsData }) {
           transition={{ duration: 0.5 }}
           className="tracking-wider text-2xl font-bold text-gray-800 dark:text-white"
         >
-          Projects
+          Proyek
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}

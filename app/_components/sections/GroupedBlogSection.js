@@ -25,7 +25,7 @@ export default function GroupedBlogSection({ postsByYear, postCount }) {
           transition={{ duration: 0.5 }}
           className="tracking-wider text-2xl font-bold text-gray-800 dark:text-white"
         >
-          Writings
+          Blog
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -33,8 +33,8 @@ export default function GroupedBlogSection({ postsByYear, postCount }) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-2 text-wrap text-sm text-gray-600 dark:text-muted-foreground"
         >
-          I write about web development, programming, and software engineering.
-          Here are some of my recent blog posts.
+          Saya menulis tentang pengembangan web, pemrograman, dan rekayasa
+          perangkat lunak. Berikut ini beberapa posting blog terbaru saya.
         </motion.p>
         <motion.p
           initial={{ opacity: 0 }}
@@ -42,7 +42,7 @@ export default function GroupedBlogSection({ postsByYear, postCount }) {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-sm text-gray-500 dark:text-gray-400"
         >
-          Total Posts: <span className="font-medium">{postCount}+</span>
+          Jumlah Artikel: <span className="font-medium">{postCount}+</span>
         </motion.p>
       </div>
 

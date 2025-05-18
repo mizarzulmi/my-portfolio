@@ -175,7 +175,7 @@ export default async function ProjectDetailPage({ params }) {
         {project.tech_stack?.length > 0 && (
           <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
             <h4 className="text-sm font-medium mb-2 text-gray-500 dark:text-gray-400">
-              Technologies Used:
+              Tech Stack:
             </h4>
             <div className="flex flex-wrap gap-2">
               {/* Tech Stack Badges */}

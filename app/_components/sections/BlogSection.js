@@ -24,7 +24,7 @@ export default function BlogSection({ posts, showViewAll = false }) {
               transition={{ duration: 0.5 }}
               className="tracking-wider text-2xl font-bold underline-offset-4 group-hover:underline text-gray-800 dark:text-white"
             >
-              Writings
+              Blog
             </motion.h2>
           </Link>
           {showViewAll && (
@@ -46,8 +46,8 @@ export default function BlogSection({ posts, showViewAll = false }) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-2 text-wrap text-sm text-gray-600 dark:text-muted-foreground"
         >
-          I write about web development, programming, and software engineering.
-          Here are some of my recent blog posts.
+          Saya menulis tentang pengembangan web, pemrograman, dan rekayasa
+          perangkat lunak. Berikut ini beberapa posting blog terbaru saya.
         </motion.p>
       </div>
 

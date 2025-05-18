@@ -37,7 +37,7 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
               transition={{ duration: 0.5 }}
               className="tracking-wider text-2xl font-bold underline-offset-4 group-hover:underline text-gray-800 dark:text-white"
             >
-              Projects
+              Proyek
             </motion.h2>
           </Link>
           {showViewAll && (

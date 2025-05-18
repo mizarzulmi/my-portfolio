@@ -1,4 +1,4 @@
-# 🧑‍💻 My Portfolio – Built with Next.js 15 + Tailwind CSS
+# 🧑‍💻 My Portfolio – Built with Next.js 15 + Tailwind CSS + Sanity CMS
 
 Welcome to my personal portfolio! This project showcases my work, experiences, and articles, built using the latest technologies.
 

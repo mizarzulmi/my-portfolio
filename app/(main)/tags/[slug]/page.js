@@ -74,7 +74,7 @@ export default function TagPage({ params }) {
               transition={{ duration: 0.5 }}
               className="tracking-wider text-2xl font-bold underline-offset-4 group-hover:underline text-gray-800 dark:text-white"
             >
-              Posts with tag #{tag.title}
+              Posting dengan tag #{tag.title}
             </motion.h2>
           </div>
           <motion.p
@@ -83,7 +83,8 @@ export default function TagPage({ params }) {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-2 text-wrap text-sm text-gray-600 dark:text-muted-foreground"
           >
-            {tag.description || `Collection of posts tagged with #${tag.title}`}
+            {tag.description ||
+              `Koleksi postingan yang diberi tag #${tag.title}`}
           </motion.p>
           <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
             {posts.length} {posts.length === 1 ? "post" : "posts"} found
