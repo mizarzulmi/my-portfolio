@@ -1,4 +1,4 @@
-import { TagIcon, CodeIcon } from "@sanity/icons";
+import { CodeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const tag = defineType({

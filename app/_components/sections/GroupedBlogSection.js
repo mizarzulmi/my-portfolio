@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { CalendarDays, Eye } from "lucide-react";
 
-export default function GroupedBlogSection({ postsByYear }) {
+export default function GroupedBlogSection({ postsByYear, postCount }) {
   if (!postsByYear || Object.keys(postsByYear).length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
@@ -35,6 +35,14 @@ export default function GroupedBlogSection({ postsByYear }) {
         >
           I write about web development, programming, and software engineering.
           Here are some of my recent blog posts.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-sm text-gray-500 dark:text-gray-400"
+        >
+          Total Posts: <span className="font-medium">{postCount}+</span>
         </motion.p>
       </div>
 

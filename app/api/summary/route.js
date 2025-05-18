@@ -1,18 +1,44 @@
-// app/api/data/summary/route.js
-
-import summaryData from "@/data/summary.json";
-import ApiResponse from "@/app/_utils/api-response";
+import { sanityClient } from "@/app/_utils/sanity.client";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    return ApiResponse.success({
-      name: summaryData.name,
-      greeting: summaryData.greeting,
-      description: summaryData.description,
-      profileImage: summaryData.profileImage,
-      links: summaryData.links || [],
+    const query = `*[_type == "summary"][0] {
+      name,
+      greeting,
+      shortBio,
+      detailedBio,
+      "profileImage": profileImage.asset->url,
+      "profileImageAlt": profileImage.alt,
+      "resumeUrl": resume.asset->url,
+      skills[]->{
+        _id,
+        title,
+        icon
+      }
+    }`;
+
+    const summary = await sanityClient.fetch(query);
+
+    if (!summary) {
+      return NextResponse.json(
+        { success: false, error: "Summary not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: {
+        ...summary,
+        description: summary.shortBio, // Map shortBio to description for backward compatibility
+      },
     });
   } catch (error) {
-    return ApiResponse.serverError("Failed to load summary data");
+    console.error("Error fetching summary:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch summary" },
+      { status: 500 }
+    );
   }
 }

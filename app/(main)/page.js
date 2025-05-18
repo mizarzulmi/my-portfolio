@@ -23,7 +23,7 @@ export default function Home() {
           await Promise.all([
             apiClient("/api/summary"),
             apiClient("/api/experience"),
-            apiClient("/api/project?limit=2"),
+            apiClient("/api/project?limit=3"),
             apiClient("/api/blog?limit=3"),
           ]);
 

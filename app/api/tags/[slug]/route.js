@@ -2,9 +2,11 @@ import { sanityClient } from "@/app/_utils/sanity.client";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
-  const { slug } = params;
-
   try {
+    // First await the params object
+    const awaitedParams = await params;
+    const { slug } = awaitedParams;
+
     // 1. Dapatkan data tag
     const tag = await sanityClient.fetch(
       `*[_type == "tag" && slug.current == $slug][0]{

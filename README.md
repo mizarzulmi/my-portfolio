@@ -2,6 +2,10 @@
 
 Welcome to my personal portfolio! This project showcases my work, experiences, and articles, built using the latest technologies.
 
+## 🌐 Live Demo
+
+👉 [View Live Portfolio](https://mizarzulmi.dev)
+
 ## 🚀 Features
 
 - ⚡ Fast and optimized with **Next.js 15**
@@ -15,49 +19,65 @@ Welcome to my personal portfolio! This project showcases my work, experiences, a
 
 ```text
 my-portfolio/
-├── app/                   # App directory (Next.js 15)
-│   ├── _components/        # Reusable UI sections
-│   │   ├── layout/
-│   │   │   ├── navbar/
-│   │   │   │   ├── MobileMenu.js
-│   │   │   │   ├── Navbar.js
-│   │   │   │   └── NavLink.js
-│   │   │   └── Footer.js
-│   │   └── sections/
+├── app/
+│   ├── (main)/                  # Main route group
+│   │   ├── about/               # About page
+│   │   ├── blog/                # Blog pages
+│   │   ├── contact/             # Contact page
+│   │   ├── experience/          # Experience page
+│   │   ├── project/             # Projects page
+│   │   ├── tags/                # Tags page
+│   │   └── page.js              # Home page
+│   ├── _components/             # Shared components
+│   │   ├── layout/              # Layout components
+│   │   │   ├── Footer.js
+│   │   │   ├── MobileMenu.js
+│   │   │   ├── Navbar.js
+│   │   │   └── NavLink.js
+│   │   └── sections/            # Page sections
 │   │       ├── AboutSections.js
-│   │       ├── ExperiencesSettings.js
+│   │       ├── ExperiencesSections.js
 │   │       └── SummarySections.js
-│   ├── ui/                # UI elements like buttons, toggles
+│   ├── _utils/                  # Utility functions
+│   │   ├── api-client.js        # API client
+│   │   └── sanity.client.js     # Sanity client
+│   ├── ui/                      # UI components
 │   │   ├── Button.js
 │   │   ├── CustomHandBuggerIcon.js
-│   │   ├── LanguageSwitches.js
+│   │   ├── LanguageSwitcher.js
 │   │   ├── LoadingSpinner.js
 │   │   └── ThemeToggle.js
-│   ├── hooks/             # Custom React hooks
-│   │   └── useTheme.js
-│   ├── config/            # API configuration
-│   │   └── api.js
-│   ├── (main)/            # Page routes (about, projects, etc)
-│   │   ├── about/
-│   │   ├── blog/
-│   │   ├── contact/
-│   │   ├── experience/
-│   │   ├── projects/
-│   │   └── page.js
-│   ├── api/               # API route handlers
-│   │   ├── [type]/...
-│   ├── layout.js          # Main layout
-│   └── ThemeWrapper.js    # Theme context provider
-├── data/                  # JSON content
-│   ├── about.json
-│   ├── experience.json
-│   └── summary.json
-├── public/                # Public assets (images, files)
-│   ├── assets/
-│   ├── file/
-│   └── images/
-├── sanity/                # sanity
-├── .env.local             # Environment config (ignored)
-├── next.config.js
-└── package.json
+│   ├── api/                     # API routes
+│   │   ├── blog/                # Blog API routes
+│   │   │   ├── [slug]/
+│   │   │   │   ├── page.js
+│   │   │   │   └── views/
+│   │   │   │       └── route.js
+│   │   ├── project/             # Project API routes
+│   │   │   └── [slug]/
+│   │   │       └── page.js
+│   │   └── tags/                # Tags API routes
+│   │       └── [slug]/
+│   │           └── page.js
+│   ├── layout.js                # Root layout
+│   └── ThemeWrapper.js          # Theme provider
+├── public/                      # Static assets
+│   ├── assets/                  # General assets
+│   ├── images/                  # Image files
+│   └── studio/                  # Sanity studio assets
+├── sanity/                      # Sanity configuration
+│   ├── schemas/                 # Sanity schemas
+│   └── studio/                  # Studio customization
+├── styles/                      # Global styles
+│   ├── globals.scss             # Global SCSS
+│   └── tailwind/                # Tailwind configurations
+├── .env.local                   # Environment variables
+├── next.config.js               # Next.js config
+├── package.json                 # Project dependencies
+├── sanity.config.js             # Sanity config
+└── tailwind.config.js           # Tailwind config
 ```
+
+Catatan :
+backup data : sanity dataset export production ./backup
+import data : sanity dataset import ./backup/ nama_dataset

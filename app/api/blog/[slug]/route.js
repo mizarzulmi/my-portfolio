@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
   try {
-    const { slug } = params; // No need to await in Next.js 13.4+
+    // First await the params object
+    const awaitedParams = await params;
+    const { slug } = awaitedParams;
 
     const query = `*[_type == "post" && slug.current == $slug][0] {
       _id,
@@ -35,7 +37,6 @@ export async function GET(request, { params }) {
       );
     }
 
-    // Return with success: true and data
     return NextResponse.json({
       success: true,
       data: post,

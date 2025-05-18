@@ -5,11 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function ProjectSection({ projectsData, showViewAll = false }) {
+export default function ListProjectSection({ projectsData }) {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // Perubahan: Cek projectsData.data menjadi projectsData
-  if (!projectsData) {
+  if (!projectsData || !projectsData.projects) {
     return (
       <div className="text-center text-red-500 py-8">
         Projects data is not available
@@ -17,8 +16,7 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
     );
   }
 
-  // Perubahan: Cek projectsData.projects langsung
-  if (!projectsData.projects || projectsData.projects.length === 0) {
+  if (projectsData.projects.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
         No projects to display
@@ -29,30 +27,14 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
   return (
     <section className="pb-5">
       <div className="my-6 flex flex-col gap-0">
-        <div className="flex group my-6 cursor-pointer items-center justify-between gap-3">
-          <Link href="/project">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="tracking-wider text-2xl font-bold underline-offset-4 group-hover:underline text-gray-800 dark:text-white"
-            >
-              Projects
-            </motion.h2>
-          </Link>
-          {showViewAll && (
-            <Link href="/project">
-              <motion.span
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="btn-soft"
-              >
-                View all →
-              </motion.span>
-            </Link>
-          )}
-        </div>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="tracking-wider text-2xl font-bold text-gray-800 dark:text-white"
+        >
+          Projects
+        </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -71,25 +53,30 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
       >
         {projectsData.projects.map((project, index) => (
           <motion.div
-            key={project._id || index} // Perubahan: Gunakan _id jika ada
+            key={project._id || index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
             whileHover={{ y: -2 }}
             className="flex flex-col gap-3 rounded-lg border bg-card text-card border-custom p-4 sm:flex-row group relative transition-all duration-200 hover:shadow-sm backdrop-blur-sm hover:bg-gray-100/50 dark:hover:bg-neutral-800/50"
           >
-            {/* Image container */}
-            {project.image && ( // Perubahan: Tambahkan conditional rendering untuk image
+            {/* Image container with lazy loading */}
+            {project.image && (
               <div
                 className="relative cursor-zoom-in overflow-hidden rounded-md"
                 onClick={() => setSelectedImage(project.image)}
               >
                 <div className="relative h-60 min-w-40 sm:h-30">
                   <Image
-                    alt={project.alt || project.title} // Perubahan: Gunakan alt text jika ada
+                    alt={project.alt || project.title}
                     src={project.image}
                     fill
                     className="object-cover rounded-md transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlZWVlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2FhYSI+TG9hZGluZzwvdGV4dD48L3N2Zz4="
                   />
-                  {/* Simple overlay effect */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
                 </div>
               </div>
@@ -99,13 +86,11 @@ export default function ProjectSection({ projectsData, showViewAll = false }) {
               <Link
                 href={`/project/${project.slug?.current || project.slug || "#"}`}
               >
-                {/* Perubahan: Handle slug.current atau slug langsung */}
                 <h3 className="mb-2 text-lg font-medium transition-colors duration-200 hover:underline text-gray-800 dark:text-white">
                   {project.title}
                 </h3>
                 <p className="text-gray-600 dark:text-muted-foreground text-sm line-clamp-2">
                   {project.description}
-                  {/* Perubahan: Hapus dangerouslySetInnerHTML jika tidak diperlukan */}
                 </p>
 
                 {/* Tech Stack Badges */}

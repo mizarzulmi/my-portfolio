@@ -4,7 +4,6 @@ export const structure = (S) =>
     .title("Portofolio")
     .items([
       S.documentTypeListItem("summary").title("Summary"),
-      S.documentTypeListItem("about").title("About"),
       S.documentTypeListItem("education").title("Education"),
       S.documentTypeListItem("experience").title("Experience"),
       S.documentTypeListItem("project").title("Projects"),
@@ -12,6 +11,7 @@ export const structure = (S) =>
       S.documentTypeListItem("post").title("Posts"),
       S.documentTypeListItem("tag").title("Tags"),
       S.documentTypeListItem("category").title("Categories"),
+      S.documentTypeListItem("contact").title("Contact"),
       S.documentTypeListItem("author").title("Authors"),
       S.divider(),
       ...S.documentTypeListItems().filter(
@@ -19,15 +19,15 @@ export const structure = (S) =>
           item.getId() &&
           ![
             "summary",
-            "about",
             "education",
             "experience",
             "certification",
             "post",
             "project",
-            "category",
-            "author",
             "tag",
+            "category",
+            "contact",
+            "author",
           ].includes(item.getId())
       ),
     ]);

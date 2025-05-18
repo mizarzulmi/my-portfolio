@@ -7,20 +7,23 @@ import { apiClient } from "@/app/_utils/api-client";
 
 export default function BlogPage() {
   const [postsData, setPostsData] = useState(null);
+  const [postCount, setPostCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient("/api/blog");
+        const [postsResponse, countResponse] = await Promise.all([
+          apiClient("/api/blog"),
+          apiClient("/api/blog/count"),
+        ]);
 
-        if (!Array.isArray(response.data)) {
+        if (!Array.isArray(postsResponse.data)) {
           throw new Error("Expected array of posts");
         }
 
-        // Group posts by year
-        const postsByYear = response.data.reduce((acc, post) => {
+        const postsByYear = postsResponse.data.reduce((acc, post) => {
           const year = new Date(post.publishedAt).getFullYear();
           if (!acc[year]) acc[year] = [];
           acc[year].push(post);
@@ -28,8 +31,9 @@ export default function BlogPage() {
         }, {});
 
         setPostsData(postsByYear);
+        setPostCount(countResponse.data?.count || postsResponse.data.length);
       } catch (err) {
-        console.error("Error fetching blog posts:", err);
+        console.error("Error fetching blog data:", err);
         setError(
           err.message || "Failed to load blog posts. Please try again later."
         );
@@ -46,5 +50,5 @@ export default function BlogPage() {
     return <div className="text-center text-red-500 py-8">{error}</div>;
   if (!postsData) return null;
 
-  return <GroupedBlogSection postsByYear={postsData} />;
+  return <GroupedBlogSection postsByYear={postsData} postCount={postCount} />;
 }

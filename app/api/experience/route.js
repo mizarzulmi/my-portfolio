@@ -1,29 +1,36 @@
-// app/api/data/experience/route.js
-
-import experienceData from "@/data/experience.json";
-import ApiResponse from "@/app/_utils/api-response";
+import { sanityClient } from "@/app/_utils/sanity.client";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    if (!Array.isArray(experienceData)) {
-      throw new Error("Invalid data structure: expected array");
-    }
+    const query = `*[_type == "experience"] | order(period desc) {
+      _id,
+      company,
+      position,
+      period,
+      duration,
+      "logo": logo.asset->url,
+      "logoAlt": logo.alt,
+      responsibilities,
+      current,
+      "skills": skills[]->{
+        _id,
+        title,
+        slug
+      }
+    }`;
 
-    return ApiResponse.success(
-      experienceData.map((exp) => ({
-        id: exp.id,
-        company: exp.company,
-        position: exp.position,
-        period: exp.period,
-        duration: exp.duration,
-        description: exp.description,
-        logo: exp.logo,
-      })),
-      { count: experienceData.length }
-    );
+    const experiences = await sanityClient.fetch(query);
+
+    return NextResponse.json({
+      success: true,
+      data: experiences,
+    });
   } catch (error) {
-    return ApiResponse.serverError(
-      error instanceof Error ? error.message : "Failed to load experience data"
+    console.error("Error fetching experiences:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch experiences" },
+      { status: 500 }
     );
   }
 }

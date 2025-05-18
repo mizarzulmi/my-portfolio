@@ -5,10 +5,10 @@ import { author } from "./author";
 import { tag } from "./tag";
 import { project } from "./project";
 import { summary } from "./summary";
-import { about } from "./about";
 import { education } from "./education";
 import { experience } from "./experience";
 import { certification } from "./certification";
+import { contact } from "./contact";
 
 export const schema = {
   types: [
@@ -19,9 +19,9 @@ export const schema = {
     tag,
     project,
     summary,
-    about,
     education,
     experience,
     certification,
+    contact,
   ],
 };

@@ -4,6 +4,7 @@ import { urlFor } from "@/app/_utils/sanity.client";
 import { apiClient } from "@/app/_utils/api-client";
 import ViewTracker from "@/app/_components/ui/ViewTracker";
 import Link from "next/link";
+import { PortableTextComponents } from "@/app/_components/ui/PortableText";
 
 async function getPost(slug) {
   try {
@@ -27,7 +28,9 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }) {
-  const { slug } = params;
+  const awaitedParams = await params;
+  const { slug } = awaitedParams;
+
   let post;
 
   try {
@@ -114,8 +117,15 @@ export default async function BlogPostPage({ params }) {
           </p>
         )}
 
-        <div className="[&>p]:mb-4 [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:text-2xl [&>h2]:font-bold">
-          <PortableText value={post.body} />
+        <div className="prose dark:prose-invert max-w-none">
+          {post.body ? (
+            <PortableText
+              value={post.body}
+              components={PortableTextComponents}
+            />
+          ) : (
+            <p>No detailed content available for this post.</p>
+          )}
         </div>
 
         {post.tags?.length > 0 && (

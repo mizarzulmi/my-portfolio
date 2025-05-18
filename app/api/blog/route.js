@@ -21,10 +21,15 @@ export async function GET(request) {
         _id,
         title,
         slug
+      },
+      mainImage {
+        asset->{
+          url
+        },
+        alt
       }
     }`;
 
-    // Jika ada parameter limit, tambahkan ke query
     if (limit && !isNaN(limit)) {
       query = `*[_type == "post"] | order(publishedAt desc) [0...${parseInt(limit)}] {
         _id,
@@ -41,6 +46,12 @@ export async function GET(request) {
           _id,
           title,
           slug
+        },
+        mainImage {
+          asset->{
+            url
+          },
+          alt
         }
       }`;
     }

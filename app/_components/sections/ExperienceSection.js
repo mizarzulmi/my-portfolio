@@ -1,10 +1,9 @@
-// app/components/sections/ExperienceSection.js
 "use client";
 
 import { motion } from "framer-motion";
 import LoadingSpinner from "@/app/_components/ui/LoadingSpinner";
 
-export default function ExperiencesSettings({ data, loading, error }) {
+export default function ExperienceSection({ data, loading, error }) {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
@@ -48,25 +47,27 @@ export default function ExperiencesSettings({ data, loading, error }) {
         Experience
       </h2>
       <p className="text-wrap text-gray-600 dark:text-gray-400 pb-2">
-        Here are some of the companies I`ve had the pleasure of working with.
+        Here are some of the companies Ive had the pleasure of working with.
       </p>
 
       <div className="space-y-6">
         {data.map((exp) => (
           <motion.div
-            key={exp.id}
+            key={exp._id}
             className="pb-6 hover:border-b hover:border-gray-200 dark:hover:border-gray-800"
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             <div className="flex items-center gap-4">
-              <img
-                src={exp.logo}
-                alt={`${exp.company} logo`}
-                width={64}
-                height={64}
-                className="rounded-md object-cover w-16 h-16 border border-gray-200 dark:border-gray-700"
-              />
+              {exp.logo && (
+                <img
+                  src={exp.logo}
+                  alt={exp.logoAlt || `${exp.company} logo`}
+                  width={64}
+                  height={64}
+                  className="rounded-md object-cover w-16 h-16 border border-gray-200 dark:border-gray-700"
+                />
+              )}
 
               <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between !gap-0">
                 <div>
@@ -80,6 +81,11 @@ export default function ExperiencesSettings({ data, loading, error }) {
                 <div className="sm:text-right mt-1 sm:mt-0">
                   <p className="text-gray-900 dark:text-white !leading-5">
                     {exp.period}
+                    {exp.current && (
+                      <span className="ml-1 text-xs text-green-600 dark:text-green-400">
+                        •
+                      </span>
+                    )}
                   </p>
                   <p className="text-gray-600 dark:text-gray-400 text-sm opacity-50 !leading-5">
                     {exp.duration}

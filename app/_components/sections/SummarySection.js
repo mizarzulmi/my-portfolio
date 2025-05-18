@@ -1,10 +1,8 @@
-// app/_components/sections/SummarySection.js
 "use client";
 
 import LoadingSpinner from "@/app/_components/ui/LoadingSpinner";
 import { motion } from "framer-motion";
-import { Download } from "lucide-react";
-import { MessageSquare } from "lucide-react";
+import { Download, MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Button from "@/app/_components/ui/Button";
 
@@ -36,7 +34,7 @@ export default function SummarySection({ data, loading, error }) {
       <div className="hidden sm:block h-48 w-48">
         <img
           src={data.profileImage}
-          alt={data.name}
+          alt={data.profileImageAlt || data.name}
           width={180}
           height={180}
           className="h-full w-full rounded object-cover object-top bg-neutral-300 dark:bg-neutral-800"
@@ -68,9 +66,10 @@ export default function SummarySection({ data, loading, error }) {
               Contact me
             </Button>
             {/* CV Download Button */}
-            {data.links?.find((link) => link.text === "CV") && (
+            {data.resumeUrl && (
               <Button
-                href={data.links.find((link) => link.text === "CV").url}
+                target="_blank"
+                href={data.resumeUrl}
                 variant="secondary"
                 className="flex items-center gap-2"
                 download

@@ -2,10 +2,11 @@ import { sanityClient } from "@/app/_utils/sanity.client";
 import { NextResponse } from "next/server";
 
 export async function POST(request, { params }) {
-  const { slug } = params;
-
   try {
-    // Anggap slug adalah _id
+    // First await the params object
+    const awaitedParams = await params;
+    const { slug } = awaitedParams;
+
     const post = await sanityClient.fetch(
       `*[_type == "post" && _id == $id][0]{_id, views}`,
       { id: slug }
@@ -18,7 +19,7 @@ export async function POST(request, { params }) {
       );
     }
 
-    // Pakai post._id untuk patch
+    // Update view count
     const result = await sanityClient
       .patch(post._id)
       .setIfMissing({ views: 0 })
@@ -35,7 +36,7 @@ export async function POST(request, { params }) {
       {
         success: false,
         error: error.message || "Failed to update view count",
-        details: error,
+        details: process.env.NODE_ENV === "development" ? error : undefined,
       },
       { status: 500 }
     );
